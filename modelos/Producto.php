@@ -11,17 +11,17 @@ Class Producto
 	}
 
 	//Implementamos un método para insertar registros
-	public function insertar($nombre,$iva,$precioVenta,$precioCompra,$idProveedor,$stock,$stockMinimo,$idRubro)
+	public function insertar($nombre,$idRubro,$idProveedor,$stockMinimo,$precioCoste)
 	{
-		$sql="INSERT INTO producto (nombre,iva,precioVenta,precioCompra,idProveedor,stock,stockMinimo,idRubro,condicion)
-		VALUES ('$nombre','$iva','$precioVenta','$precioCompra','$idProveedor','$stock','$stockMinimo','$idRubro','1')";
+		$sql="INSERT INTO producto (nombre,idRubro,idProveedor,stockMinimo,precioCoste,condicion)
+		VALUES ('$nombre','$idRubro','$idProveedor','$stockMinimo','$precioCoste','1')";
 		return ejecutarConsulta($sql);
 	}
 
 	//Implementamos un método para editar registros
-	public function editar($idProducto,$nombre,$iva,$precioVenta,$precioCompra,$idProveedor,$stock,$stockMinimo,$idRubro)
+	public function editar($idProducto,$nombre,$idRubro,$idProveedor,$stockMinimo,$precioCoste)
 	{
-		$sql="UPDATE producto SET nombre='$nombre',iva='$iva',precioVenta='$precioVenta',precioCompra='$precioCompra',idProveedor='$idProveedor',stock='$stock',stockMinimo='$stockMinimo',idRubro='$idRubro' WHERE idProducto='$idProducto'";
+		$sql="UPDATE producto SET nombre='$nombre',idRubro='$idRubro',idProveedor='$idProveedor',stockMinimo='$stockMinimo',precioCoste='$precioCoste' WHERE idProducto='$idProducto'";
 		return ejecutarConsulta($sql);
 	}
 
@@ -49,14 +49,15 @@ Class Producto
 	//Implementar un método para listar los registros
 	public function listar()
 	{
-		$sql="SELECT * FROM producto";
+		// $sql="SELECT * FROM producto";
+		$sql="select p.idProducto,p.nombre,r.nombre as rubro,pr.nombreCompleto as proveedor,p.stockMinimo,p.precioCoste,p.condicion from producto p inner join rubro r on p.idRubro = r.idRubro inner join proveedor pr on p.idProveedor = pr.idProveedor order by p.nombre ASC;";
 		return ejecutarConsulta($sql);		
 	}
 	//Implementar un método para listar los registros y mostrar en el select
 	public function select()
 	{
-		$sql="SELECT * FROM producto where condicion=1";
-		return ejecutarConsulta($sql);		
+		$sql="select p.idProducto,p.nombre,r.nombre as rubro,pr.nombreCompleto as proveedor,p.stockMinimo,p.precioCoste,p.condicion from producto p inner join rubro r on p.idRubro = r.idRubro inner join proveedor pr on p.idProveedor = pr.idProveedor where codicion =1 order by p.nombre ASC;";
+		return ejecutarConsulta($sql);
 	}
 }
 

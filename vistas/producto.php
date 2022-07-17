@@ -1,5 +1,14 @@
 <?php
 require 'header.php';
+require "../config/Conexion.php";
+
+require_once "../modelos/Rubro.php";
+$rubro=new Rubro();
+$rsptaRubro=$rubro->listar();
+
+require_once "../modelos/Proveedor.php";
+$proveedor = new Proveedor();
+$rsptaProveedor = $proveedor->listar();
 ?>
 <!--Contenido-->
       <!-- Content Wrapper. Contains page content -->
@@ -21,26 +30,22 @@ require 'header.php';
                           <thead>
                             <th>Opciones</th>
                             <th>Nombre</th>
-                            <th>IVA</th>
-                            <th>Precio Venta</th>
-                            <th>Precio Compra</th>
-                            <th>Proveedor</th>
-                            <th>Stock</th>
-                            <th>Stock Minimo</th>
                             <th>Rubro</th>
+                            <th>Proveedor</th>
+                            <th>Stock Minimo</th>
+                            <th>Precio Coste</th>
+                            <th>Estado</th>
                           </thead>
                           <tbody>                            
                           </tbody>
                           <tfoot>
                             <th>Opciones</th>
                             <th>Nombre</th>
-                            <th>IVA</th>
-                            <th>Precio Venta</th>
-                            <th>Precio Compra</th>
-                            <th>Proveedor</th>
-                            <th>Stock</th>
-                            <th>Stock Minimo</th>
                             <th>Rubro</th>
+                            <th>Proveedor</th>
+                            <th>Stock Minimo</th>
+                            <th>Precio Coste</th>
+                            <th>Estado</th>
                           </tfoot>
                         </table>
                     </div>
@@ -48,41 +53,46 @@ require 'header.php';
                         <form name="formulario" id="formulario" method="POST">
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>Nombre:</label>
-                            <input type="hidden" name="idcategoria" id="idcategoria">
+                            <input type="hidden" name="idProducto" id="idProducto">
                             <input type="text" class="form-control" name="nombre" id="nombre" maxlength="50" placeholder="Nombre" required>
                           </div>
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <label>IVA:</label>
-                            <input type="text" class="form-control" name="iva" id="iva" maxlength="256" placeholder="IVA">
-                          </div>
-                          <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <label>Precio Venta:</label>
-                            <input type="text" class="form-control" name="precioVenta" id="precioVenta" maxlength="256" placeholder="Precio Compra">
-                          </div>
-                          <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <label>Precio Compra:</label>
-                            <input type="text" class="form-control" name="precioCompra" id="precioCompra" maxlength="256" placeholder="Precio Compra">
-                          </div>
-                          <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <label>Proveedor:</label>
-                            <select class="form-control" name="proveedor" id="proveedor">
-                                <option value="">COMO SE HACE ESTO?</option>
+                            <label>Rubro:</label>
+                            <select class="form-control" name="idRubro" id="idRubro">
+                                <?php
+                                foreach ($rsptaRubro as $dato) {
+                                ?>
+                                  <option value="<?php echo $dato['idRubro']; ?>">
+                                    <?php echo $dato['nombre']; ?>
+                                  </option>
+                                <?php
+                                }
+                                ?>
                             </select>
                           </div>
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <label>Stock:</label>
-                            <input type="text" class="form-control" name="stock" id="stock" maxlength="256" placeholder="Stock">
+                            <label>Proveedor:</label>
+                            <select class="form-control" name="idProveedor" id="idProveedor">
+                                <?php
+                                foreach ($rsptaProveedor as $dato) {
+                                ?>
+                                  <option value="<?php echo $dato['idProveedor'] ?>">
+                                    <?php echo $dato['nombreCompleto'] ?>
+                                  </option>
+                                <?php
+                                }
+                                ?>
+                            </select>
                           </div>
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>Stock Minimo:</label>
                             <input type="text" class="form-control" name="stockMinimo" id="stockMinimo" maxlength="256" placeholder="Stock Minimo">
                           </div>
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <label>Rubro:</label>
-                            <select class="form-control" name="rubro" id="rubro">
-                                <option value="">COMO SE HACE ESTO?</option>
-                            </select>
+                            <label>Precio de Coste:</label>
+                            <input type="text" class="form-control" name="precioCoste" id="precioCoste" maxlength="256" placeholder="Precio de Coste">
                           </div>
+                          
                           <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
 

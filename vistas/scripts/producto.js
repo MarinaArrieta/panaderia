@@ -14,13 +14,11 @@ function init() {
 function limpiar() {
   $("#idProducto").val("");
   $("#nombre").val("");
-  $("#iva").val("");
-  $("#precioVenta").val("");
-  $("#precioCompra").val("");
-  $("#idProveedor").val("");
-  $("#stock").val("");
-  $("#stockMinimo").val("");
   $("#idRubro").val("");
+  $("#idProveedor").val("");
+  $("#stockMinimo").val("");
+  $("#precioCoste").val("");
+  $("#condicion").val("");
 }
 
 //Función mostrar formulario
@@ -61,7 +59,7 @@ function listar() {
         },
       },
       bDestroy: true,
-      iDisplayLength: 10, //Paginación
+      iDisplayLength: 25, //Paginación
       order: [[0, "desc"]], //Ordenar (columna,orden)
     })
     .DataTable();
@@ -99,20 +97,17 @@ function mostrar(idProducto) {
 
       $("#idProducto").val(data.idProducto);
       $("#nombre").val(data.nombre);
-      $("#iva").val(data.iva);
-      $("#precioVenta").val(data.precioVenta);
-      $("#precioCompra").val(data.precioComra);
-      $("#idProveedor").val(data.idProveedor);
-      $("#stock").val(data.stock);
-      $("#stockMinimo").val(data.stockMinimo);
       $("#idRubro").val(data.idRubro);
+      $("#idProveedor").val(data.idProveedor);
+      $("#stockMinimo").val(data.stockMinimo);
+      $("#precioCoste").val(data.precioCoste);
     }
   );
 }
 
 //Función para desactivar registros
 function desactivar(idProducto) {
-  bootbox.confirm("¿Está Seguro de desactivar rubro?", function (result) {
+  bootbox.confirm("¿Está Seguro de desactivar el producto?", function (result) {
     if (result) {
       $.post(
         "../controlador/producto.php?op=desactivar",
@@ -128,7 +123,7 @@ function desactivar(idProducto) {
 
 //Función para activar registros
 function activar(idProducto) {
-  bootbox.confirm("¿Está Seguro de activar el rubro?", function (result) {
+  bootbox.confirm("¿Está Seguro de activar el producto?", function (result) {
     if (result) {
       $.post(
         "../controlador/producto.php?op=activar",
